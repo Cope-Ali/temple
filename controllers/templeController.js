@@ -58,7 +58,8 @@ function getTempleById(req,res){
 }
 
 module.exports = {
-    search: search,
+    searchState: searchState,
+    searchRegion: searchRegion,
     getTempleList: getTempleList,
     getTempleById: getTempleById
 };
