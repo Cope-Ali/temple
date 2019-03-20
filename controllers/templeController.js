@@ -1,32 +1,39 @@
 const templeModel = require("../models/templeModel.js")
 
-function search(req,res){
-    //search for temples by state or region
+function searchState(req,res){
+    //search for temples by state 
 
     var state = req.query.state; //TODO comes from query
-    var region = req.query.region; //TODO comes from query
+    
     console.log("State: ");
     console.log(state);
-    console.log("Region: ");
-    console.log(region);
+    
     
     //TODO check if state id or if region id and call appropriate function
-    if(state){
+    
     templeModel.searchByState(state, function(error, results) {
         console.log("Getting temples by state with id:" + state);
         res.json(results);
     });
-    }
-    else if (region){
+   
+}
+
+function searchRegion(req,res){
+    //search for temples by region
+   
+    var region = req.query.region; //TODO comes from query
+    console.log("Region: ");
+    console.log(region);
+    
+    //TODO check if state id or if region id and call appropriate function
     templeModel.searchByRegion(region, function(error, results){
         console.log("Getting temples by region with id:" + region);
         res.json(results);        
     });
     }
 
-    else
-    res.json({result:"error"})
-}
+
+
 
 function getTempleList(req,res){
     //show all temples

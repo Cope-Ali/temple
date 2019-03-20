@@ -23,7 +23,8 @@ app.get("/regions", regionController.getRegionList);
 app.get("/region", regionController.getRegionById);
 app.post("/region", regionController.postRegion);
 
-app.get("/search", templeController.search);
+app.get("/searchState", templeController.searchState);
+app.get("/searchRegion", templeController.searchRegion);
 app.get("/temples", templeController.getTempleList);
 app.get('/temple', templeController.getTempleById);
 

@@ -4,7 +4,7 @@ console.log("Searching by state...");
 var state = $("#state").val();
 console.log("State: " + state);
 
-$.get("/search", {state:state}, function(data){
+$.get("/searchState", {state:state}, function(data){
     console.log("Back from the server with: ");
     console.log(data);
 
@@ -22,7 +22,7 @@ function searchByRegion(){
     var region = $("#region").val();
     console.log("Region: " + region);
 
-$.get("/search", {region:region}, function(data){
+$.get("/searchRegion", {region:region}, function(data){
     console.log("Back from the server with: ");
     console.log(data);
     for(var i=0; i < data.temples.length; i++){
