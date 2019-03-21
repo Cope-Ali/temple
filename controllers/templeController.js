@@ -8,9 +8,6 @@ function searchState(req,res){
     console.log("State: ");
     console.log(state);
     
-    
-    //TODO check if state id or if region id and call appropriate function
-    
     templeModel.searchByState(state, function(error, results) {
         console.log("Getting temples by state with id:" + state);
         res.json(results);
@@ -25,15 +22,12 @@ function searchRegion(req,res){
     console.log("Region: ");
     console.log(region);
     
-    //TODO check if state id or if region id and call appropriate function
+    
     templeModel.searchByRegion(region, function(error, results){
         console.log("Getting temples by region with id:" + region);
         res.json(results);        
     });
     }
-
-
-
 
 function getTempleList(req,res){
     //show all temples

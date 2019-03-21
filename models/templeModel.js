@@ -30,7 +30,7 @@ function searchByState(state, callback){
                     {id:6, name:"San Diego", state: "California"},
                     {id:7, name:"Redlands", state: "California"}
                 ]};
-                callback(null, results);
+                callback(null, db_results);
         }
     });
 }
