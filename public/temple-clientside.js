@@ -8,9 +8,10 @@ $.get("/searchState", {state:state}, function(data){
     console.log("Back from the server with: ");
     console.log(data);
 
-    for(var i=0; i < data.temples.length; i++){
-        var temple = data.temples[i];
+    for(var i=0; i < data.rows.length; i++){
+        var temple = data.rows[i];
         $("#ulTemples").append("<li>" + temple.name + " " + temple.state + "</li>");
+        
     }
 
 })
