@@ -5,11 +5,13 @@
         <script src="temple-clientside.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
-    <body>
+    <body onload="stateList()">
         <h1>Search for Temples!</h1>
 
-        <input type="text" id="state" placeholder="state"> <button onclick="searchByState()">Search by State</button><br>
-        <input type="text" id="region" placeholder="region"> <button onclick="searchByRegion()">Search by Region</button><br>
+        <select id="stateSelect"></select>
+        <button onclick="searchByState()">Search by State</button><br>
+        
+        <input type="text" id="region" placeholder="region"> <button onclick="searchByRegion()">Search by Region (1-4) </button><br>
 
 <div>
     <h2>Results</h2>
