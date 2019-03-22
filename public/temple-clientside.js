@@ -1,11 +1,12 @@
 function searchByState(){
 console.log("Searching by state...");
-
+$("#ulTemples").empty();
 //var state = $("#state").val();
 var state = $("#stateSelect").val();
 console.log("State: " + state);
 
 $.get("/searchState", {state:state}, function(data){
+    
     console.log("Back from the server with: ");
     console.log(data);
 
@@ -20,6 +21,7 @@ $.get("/searchState", {state:state}, function(data){
 
 function searchByRegion(){
     console.log("Searching by region...");
+    $("#ulTemples").empty();
 
     var region = $("#region").val();
     console.log("Region: " + region);
