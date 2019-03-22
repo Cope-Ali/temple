@@ -97,3 +97,5 @@ VALUES
 ('Bountiful Utah Temple','640 S Bountiful Blvd','Bountiful','Utah','34','84010-1394','https://www.lds.org/temples/details/bountiful-utah-temple?lang=eng','4'),
 ('Brigham City Utah Temple','250 S Main St','Brigham City','Utah','34','84302-2560','https://www.lds.org/temples/details/brigham-city-utah-temple?lang=eng','4');
 
+INSERT INTO users(username, password, name, home_address, home_city, home_zipcode, home_state, home_stateId)
+VALUES ('test','password','my name', 'my address', 'redding', '84003', (select name from states where abbrev = 'CA'), (select state_id from states where abbrev = 'CA'));

@@ -13,6 +13,24 @@ function getAllStates(callback){
             throw err;
         } 
         else {
+            //console.log("back from database with: ");
+            //console.log(db_results);
+
+            callback(null, db_results);
+        }
+    });
+}
+
+function stateID(abbrev, callback){
+    //get a specific state id using the state abbrev
+    console.log("checking db with abbrev" + abbrev);
+    var sql = "SELECT state_id FROM states WHERE abbrev=$1::text";
+    var params = [abbrev];
+    pool.query(sql, params, function(err, db_results){
+        if(err){
+            throw err;
+        } 
+        else {
             console.log("back from database with: ");
             console.log(db_results);
 
@@ -39,5 +57,6 @@ function setState(state, callback){
 module.exports = {
     getAllStates: getAllStates,
     getStateById: getStateById,
-    setState: setState
+    setState: setState,
+    stateID: stateID
 };

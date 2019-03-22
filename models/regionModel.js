@@ -6,17 +6,18 @@ const pool = new Pool({connectionString: db_url});
 
 function getAllRegions(callback){
     //get all temple states from DB
+    var sql = "SELECT * FROM regions";
+    pool.query(sql, function(err, db_results){
+        if(err){
+            throw err;
+        } 
+        else {
+            //console.log("back from database with: ");
+            //console.log(db_results);
 
-    var results = {
-        states: [
-            {id:1, name:"West"},
-            {id:2, name:"Mid-West"},
-            {id:3, name:"East"},
-            {id:4, name:"South"}
-        ]
-    }
-
-    callback(null, results);
+            callback(null, db_results);
+        }
+    });
 }
 
 function getRegionById(id, callback){

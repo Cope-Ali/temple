@@ -9,7 +9,7 @@ function getStateList(req,res){
     });
 }
 
-function getStateById(req,res){
+function getStateById(id, req,res){
     //get a single state by id
     
     // /state?id=1
@@ -30,12 +30,27 @@ function postState(req,res){
     console.log("Setting users home state to: " + state);
 
     stateModel.setState(state, function(error, results){
+        
         res.json(results);
     });    
+}
+
+function getStateId(abbrev, req, res){
+    //get a single state id by abbrev
+
+    
+    console.log("Getting state using abbrev:" + abbrev);
+    
+    stateModel.stateID(abbrev, function(error, results){
+        console.log(results);
+        res.json(results);
+        res=results;
+    });        
 }
 
 module.exports = {
     getStateList: getStateList,
     getStateById: getStateById,
-    postState: postState
+    postState: postState,
+    getStateId: getStateId
 };

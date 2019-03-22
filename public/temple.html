@@ -4,19 +4,39 @@
         <title>Plan a Temple Trip</title>
         <script src="temple-clientside.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="templeTrip.css">
     </head>
-    <body onload="stateList()">
-        <h1>Search for Temples!</h1>
+    <body onload="stateList(); regionList()">
+<header><h1>Temple Trip Planner</h1></header>
 
+<main>
+        <h1>Search for Temples!</h1>
+        <p id="signIn">
+            <form action="checkuser()" method="post">
+                <input id="up" type="text" name="username" placeholder="Username">
+                <input id="up" type="text" name="password" placeholder="Password">
+                <input type="submit" value="Submit">
+            </form>
+        </p>
+<p id="newAccount">
+    <button class="button" onclick="createAccount()"> Create an Account </button>
+    <div id="acForm"></div>
+</p>
         <select id="stateSelect"></select>
-        <button onclick="searchByState()">Search by State</button><br>
+        <button class="button" onclick="searchByState()">Search by State</button><br>
+
+        <select id="regionSelect"></select>
+        <button class="button" onclick="searchByRegion()">Search by Region</button><br>
         
-        <input type="text" id="region" placeholder="region"> <button onclick="searchByRegion()">Search by Region (1-4) </button><br>
 
 <div>
     <h2>Results</h2>
     <ul id="ulTemples"></ul>
 </div>
+</main>
+<footer>
+
+</footer>
     </body>
     </html>
 </html>
