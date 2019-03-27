@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 const stateController = require("./controllers/stateController.js")

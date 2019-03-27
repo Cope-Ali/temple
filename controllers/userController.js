@@ -1,4 +1,5 @@
-const userModel = require("../models/userModel.js")
+const userModel = require("../models/userModel.js");
+const bcrypt = require('bcrypt');
 
 function create (req,res){
     //create a new user
@@ -20,14 +21,19 @@ function create (req,res){
     console.log(state);
     console.log(zipcode);
 
-    userModel.createUser(username, password, name, address, city, state, zipcode, function(error, results){
+    var hashed = bcrypt.hashSync(password, 10);
 
-        res.json(results);
+    userModel.createUser(username, hashed, name, address, city, state, zipcode, function(error, results){
+
+        //res.json(results);
         console.log(results.rowCount);
         if (results.rowCount > 0)
         {
-            //res.sendFile(path.join(__dirname + '../public/temple.html'));
-            
+            //$("#acForm").empty();
+            //var p = document.createElement("p");
+            //p.innerText = "User account created";
+            //$("#acForm").append($(p));
+            res.redirect("temple.html");
         }
     })
 
