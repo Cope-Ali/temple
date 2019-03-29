@@ -4,7 +4,7 @@ $("#ulTemples").empty();
 $("#resultsDiv").empty();
 var f = document.createElement("form");
 f.setAttribute('method',"get");
-f.setAttribute('action',"/selectState");
+// f.setAttribute('action',"/selectState");
 
 //var state = $("#state").val();
 var state = $("#stateSelect").val();
@@ -17,11 +17,11 @@ $.get("/searchState", {state:state}, function(data){
 
     for(var i=0; i < data.rows.length; i++){
         var temple = data.rows[i];
-        // $("#ulTemples").append("<li>" + temple.name + " " + temple.state + "</li>");
+        var templeListing = temple.name + ", " + temple.address + ", " + temple.city + ", " + temple.state;
         var cx = document.createElement("input"); //input element, text
         cx.setAttribute('type',"checkbox");
-        cx.setAttribute('name', "temple[]");
-        cx.setAttribute('value', temple.name);
+        cx.setAttribute('name', "temple");
+        cx.setAttribute('value', templeListing);
         var l = document.createElement("label")
         l.setAttribute('for', temple.name);
         l.innerHTML = temple.name + " | " + temple.address + " | " + temple.city + " | " +  temple.state + " | ";
@@ -37,6 +37,7 @@ $.get("/searchState", {state:state}, function(data){
     var s = document.createElement("input"); //input element, Submit button
             s.setAttribute('type',"submit");
             s.setAttribute('value',"Submit");
+            s.setAttribute('onClick', 'selectState()')
             f.appendChild(s);
     $("#resultsDiv").append($(f));
 
@@ -49,7 +50,7 @@ function searchByRegion(){
     $("#resultsDiv").empty();
     var f = document.createElement("form");
     f.setAttribute('method',"get");
-    f.setAttribute('action',"/selectState");
+    //f.setAttribute('action',"/selectState");
 
     var region = $("#regionSelect").val();
    // console.log("Region: " + region);
@@ -59,11 +60,11 @@ $.get("/searchRegion", {region:region}, function(data){
    // console.log(data);
     for(var i=0; i < data.rows.length; i++){
         var temple = data.rows[i];
-        // $("#ulTemples").append("<li>" + temple.name + " " + temple.state + "</li>");
+        var templeListing = temple.name + ", " + temple.address + ", " + temple.city + ", " + temple.state;
         var cx = document.createElement("input"); //input element, text
         cx.setAttribute('type',"checkbox");
-        cx.setAttribute('name', "temple[]");
-        cx.setAttribute('value', temple.name);
+        cx.setAttribute('name', "temple");
+        cx.setAttribute('value', templeListing);
         var l = document.createElement("label")
         l.setAttribute('for', temple.name);
         l.innerHTML = temple.name + " | " + temple.address + " | " + temple.city + " | " +  temple.state + " | ";
@@ -79,6 +80,7 @@ $.get("/searchRegion", {region:region}, function(data){
     var s = document.createElement("input"); //input element, Submit button
     s.setAttribute('type',"submit");
     s.setAttribute('value',"Submit");
+    s.setAttribute('onClick', 'selectState()')
     f.appendChild(s);
     $("#resultsDiv").append($(f));
 })
@@ -195,4 +197,16 @@ $.get("/searchRegion", {region:region}, function(data){
             f.appendChild(s);
 
             $("#acForm").append($(f));
+        }
+
+        function selectState(){
+            console.log("Select states!");
+            var items=document.getElementsByName('temple');
+            var selectedItems=[];
+            for(var i=0; i<items.length; i++){
+                if(items[i].type=='checkbox' && items[i].checked==true)
+                    selectedItems.push(items[i].value);
+            }
+            console.log(selectedItems);
+            $("#resultsDiv").html("In what order do you want to visit your selected temples? <br>" + selectedItems);
         }

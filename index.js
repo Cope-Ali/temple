@@ -3,6 +3,9 @@ const path = require("path");
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 var session = require('express-session');
+const googleMapsClient = require('@google/maps').createClient({
+    key: 'AIzaSyDjqp7T4xN055YDbs2zgA8BSyg2SSgdo4g'
+});
 //var FileStore = require('session-file-store')(session);
 require('dotenv').config();
 
