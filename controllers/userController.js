@@ -5,6 +5,7 @@ function create (req,res){
     //create a new user
     console.log("Creating a new user");
     console.log(req.body);
+    console.log(req);
     var username = req.body.username;
     var password = req.body.password;
     var name = req.body.name;
@@ -39,6 +40,33 @@ function create (req,res){
 
 }
 
+function login(req,res){
+    //query database to compare provided login information and existing database
+    console.log("checking login credentials");
+    console.log(req.body);
+    console.log(req.body.username);
+    console.log(req.body.password);
+    var result = false;
+    var username = req.body.username;
+    var password = req.body.password;
+    userModel.checkLogin(username, function(error, results){
+        var dbPassword = results.rows[0].password;
+        console.log(dbPassword);
+        console.log(password);
+        var isMatch = false;
+        var match = bcrypt.compareSync(password, dbPassword);
+        console.log (match);
+        if(match){
+            req.session.user['username'] = username;
+        }
+        console.log("sending results from the controller");
+        res.send(match);
+    })
+     
+}
+
+
 module.exports = {
-    create: create
+    create: create,
+    login: login
 }

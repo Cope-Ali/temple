@@ -12,12 +12,14 @@
 <main>
         <h1>Search for Temples!</h1>
         <p id="signIn">
-            <form action="checkuser()" method="post">
-                <input id="up" type="text" name="username" placeholder="Username">
-                <input id="up" type="text" name="password" placeholder="Password">
-                <input type="submit" value="Submit">
+            <!-- <form action="login()" method="post"> -->
+                <input id="username" class="up" type="text" name="username" placeholder="Username">
+                <input id="password" class="up" type="text" name="password" placeholder="Password">
+                <button type="button" onclick="login();">Log in</button>
+                <!-- <input type="submit" value="Submit"> -->
             </form>
         </p>
+        <div id="status"></div>
 <p id="newAccount">
     <button class="button" onclick="createAccount()"> Create an Account </button>
     <div id="acForm"></div>

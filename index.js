@@ -2,7 +2,10 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+var session = require('express-session');
+//var FileStore = require('session-file-store')(session);
 require('dotenv').config();
+
 
 const stateController = require("./controllers/stateController.js")
 const regionController = require("./controllers/regionController.js")
@@ -12,6 +15,39 @@ const userController = require("./controllers/userController.js")
 const PORT = process.env.PORT || 5000;
 
 var app = express();
+
+//app.use(require('morgan')('dev'));
+app.use(session({
+    secret: 'templeTrip',
+    saveUninitialized: true,
+    resave: false
+}));
+
+//set up session variable
+ app.use(function (req, res, next){
+    if (!req.session.user){
+        req.session.user = {}
+    }
+      // get the url pathname
+ // var pathname = parseurl(req).pathname
+
+  // count the views
+  //req.session.user[pathname] = (req.session.user[pathname] || 0) + 1
+
+  next()
+}) 
+
+app.use('/getServerTime', function verifyLogin (req, res, next) {
+    if (typeof(req.session.user['username']) !== 'undefined') {
+      next();
+    } else {
+      res.writeHead('401', {'Content-type': 'application/json'})
+      res.write('{"success": "false"}')
+      res.end();
+    }
+  })
+
+  
 
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({extended : false});
@@ -37,6 +73,7 @@ app.get("/temples", templeController.getTempleList);
 app.get('/temple', templeController.getTempleById);
 
 app.post("/createUser", urlencodedParser, userController.create);
+app.post('/login', urlencodedParser, userController.login);
 
 app.listen(PORT, function(){
     console.log("Server listening on port " + PORT);

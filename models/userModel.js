@@ -26,6 +26,30 @@ function createUser(username, password, name, address, city, state, zip, callbac
 
 }
 
+function checkLogin(username, callback){
+
+
+   
+    var sql = "SELECT password FROM users WHERE username=$1::text";
+    var params=[username];
+    console.log("Params are : ");
+    console.log(params);
+
+    pool.query(sql, params, function(err, db_results){
+        if(err){
+            throw err;
+        } 
+        else {
+            console.log("back from database with: ");
+            console.log(db_results);
+    
+            callback(null, db_results);
+        }
+    });
+
+}
+
 module.exports = {
-    createUser: createUser
+    createUser: createUser,
+    checkLogin: checkLogin
 };

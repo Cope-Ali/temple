@@ -69,9 +69,25 @@ $.get("/searchRegion", {region:region}, function(data){
     })
         }
 
-        function checkUser(){
+        // function checkUser(){}
+            function login() {
+                var username = $("#username").val();
+                var password = $("#password").val();
             
-        }
+                var params = {
+                    username: username,
+                    password: password
+                };
+            
+                $.post("/login", params, function(result) {
+                    console.log(result);
+                    if (result) {    
+                        $("#status").text("Successfully logged in.");
+                    } else {
+                        $("#status").text("Error logging in.");
+                    }
+                });
+            }
 
         
 
