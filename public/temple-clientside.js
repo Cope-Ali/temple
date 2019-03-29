@@ -1,6 +1,11 @@
 function searchByState(){
 //console.log("Searching by state...");
 $("#ulTemples").empty();
+$("#resultsDiv").empty();
+var f = document.createElement("form");
+f.setAttribute('method',"get");
+f.setAttribute('action',"/selectState");
+
 //var state = $("#state").val();
 var state = $("#stateSelect").val();
 //console.log("State: " + state);
@@ -12,12 +17,31 @@ $.get("/searchState", {state:state}, function(data){
 
     for(var i=0; i < data.rows.length; i++){
         var temple = data.rows[i];
-        $("#ulTemples").append("<li>" + temple.name + " " + temple.state + "</li>");
-        
+        // $("#ulTemples").append("<li>" + temple.name + " " + temple.state + "</li>");
+        var cx = document.createElement("input"); //input element, text
+        cx.setAttribute('type',"checkbox");
+        cx.setAttribute('name', "temple[]");
+        cx.setAttribute('value', temple.name);
+        var l = document.createElement("label")
+        l.setAttribute('for', temple.name);
+        l.innerHTML = temple.name + " | " + temple.address + " | " + temple.city + " | " +  temple.state + " | ";
+        var website = document.createElement('a');
+        website.setAttribute('href', temple.website);
+        website.innerHTML = "Website: " + temple.name;
+        var b = document.createElement("br");
+        f.appendChild(cx);
+        f.appendChild(l);
+        f.appendChild(website)
+        f.appendChild(b);
     }
+    var s = document.createElement("input"); //input element, Submit button
+            s.setAttribute('type',"submit");
+            s.setAttribute('value',"Submit");
+            f.appendChild(s);
+    $("#resultsDiv").append($(f));
 
 })
-}
+};
 
 function searchByRegion(){
     //console.log("Searching by region...");
