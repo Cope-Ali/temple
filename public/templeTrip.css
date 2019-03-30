@@ -59,7 +59,7 @@ select {
     align-self: center;
   }
 
-  input[type=button], input[type=submit], input[type=reset], button {
+  input[type=button], input[type=submit], input[type=reset], button, #button {
     background-color:  rgb(3, 43, 104);
     border: none;
     color: white;
@@ -68,4 +68,13 @@ select {
     margin: 4px 2px;
     cursor: pointer;
     font-weight: bold;
+  }
+
+  #templesToRank {
+    width: 80%;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    background-color: #f1f1f1;
   }

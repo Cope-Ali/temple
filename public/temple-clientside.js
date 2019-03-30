@@ -65,7 +65,7 @@ $.get("/searchRegion", {region:region}, function(data){
         cx.setAttribute('type',"checkbox");
         cx.setAttribute('name', "temple");
         cx.setAttribute('value', templeListing);
-        var l = document.createElement("label")
+        var l = document.createElement("label");
         l.setAttribute('for', temple.name);
         l.innerHTML = temple.name + " | " + temple.address + " | " + temple.city + " | " +  temple.state + " | ";
         var website = document.createElement('a');
@@ -74,13 +74,13 @@ $.get("/searchRegion", {region:region}, function(data){
         var b = document.createElement("br");
         f.appendChild(cx);
         f.appendChild(l);
-        f.appendChild(website)
+        f.appendChild(website);
         f.appendChild(b);
     }
     var s = document.createElement("input"); //input element, Submit button
     s.setAttribute('type',"submit");
     s.setAttribute('value',"Submit");
-    s.setAttribute('onClick', 'selectState()')
+    s.setAttribute('onClick', 'selectState()');
     f.appendChild(s);
     $("#resultsDiv").append($(f));
 })
@@ -209,4 +209,40 @@ $.get("/searchRegion", {region:region}, function(data){
             }
             console.log(selectedItems);
             $("#resultsDiv").html("In what order do you want to visit your selected temples? <br>" + selectedItems);
-        }
+                //create form
+            var sortForm = document.createElement("form");
+            var inBox = document.createElement("input");
+            inBox.setAttribute("list", "templesToRank");
+            sortForm.setAttribute('method',"post");
+            //TO DO HANDLE /getRoute
+            // sortForm.setAttribute('action',"/getRoute");
+            sortForm.setAttribute('id',"sortForm");
+                    //create datalist
+            var dataList = document.createElement("datalist");
+            dataList.setAttribute("id", "templesToRank");
+            
+            for(var i=0; i < selectedItems.length; i++){
+                var option = document.createElement("option");
+                var item = selectedItems[i];
+                option.setAttribute("value", item);
+                dataList.appendChild(option);
+                console.log(item + "is number " + i);
+            }
+            sortForm.appendChild(dataList)
+
+            for(var i=0; i < selectedItems.length; i++){
+            var inBox = document.createElement("input");
+            inBox.setAttribute("list", "templesToRank");
+            inBox.setAttribute("id", "templesToRank");
+            sortForm.appendChild(inBox);
+            var b = document.createElement("br");
+            sortForm.appendChild(b);
+            }
+            var s = document.createElement("input"); //input element, Submit button
+            s.setAttribute('type',"submit");
+            s.setAttribute('value',"Submit");
+            s.setAttribute('id',"button");
+            sortForm.appendChild(s);
+            $("#resultsDiv").append($(sortForm));
+
+                } 
