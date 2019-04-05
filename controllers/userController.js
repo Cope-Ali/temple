@@ -52,7 +52,7 @@ function login(req,res){
     userModel.checkLogin(username, function(error, results){
         //results = json(results);
         console.log(results);
-        var dbPassword = results.fields[0].password;
+        var dbPassword = results.rows[0].password;
         console.log(dbPassword);
         console.log(password);
         var isMatch = false;
@@ -67,8 +67,23 @@ function login(req,res){
      
 }
 
+function getUser( req, res){
+    if(req.session.user['username']){
+        var username = req.session.user['username'];
+        console.log(username);
+
+        userModel.getUser(username, function(error, results){
+            console.log("getting user information from the database");
+            res.json(results);
+        });
+    }
+    else
+    res.send('null');
+
+}
 
 module.exports = {
     create: create,
-    login: login
+    login: login,
+    getUser: getUser
 }

@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Plan a Temple Trip</title>
+        <title>Track Temples</title>
         <script src="temple-clientside.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <link rel="stylesheet" href="templeTrip.css">
     </head>
-    <body onload="stateList(); regionList()">
-<header><h1>Temple Trip Planner</h1></header>
+    <body onload="stateList(); regionList(); displayUser()">
+<header><h1>Temples Tracker</h1></header>
 
 <main>
-        <h1>Search for Temples!</h1>
+    <h1>Which Temples have YOU visited?</h1>
         <p id="signIn">
             <!-- <form action="login()" method="post"> -->
                 <input id="username" class="up" type="text" name="username" placeholder="Username">
@@ -24,6 +24,8 @@
     <button class="button" onclick="createAccount()"> Create an Account </button>
     <div id="acForm"></div>
 </p>
+<div id="userStats"></div>
+<h2>Search For Temples</h2>
         <select id="stateSelect"></select>
         <button class="button" onclick="searchByState()">Search by State</button><br>
 

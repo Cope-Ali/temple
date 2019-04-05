@@ -49,7 +49,28 @@ function checkLogin(username, callback){
 
 }
 
+function getUser(username, callback){
+var sql = "SELECT user_id, name FROM users WHERE username=$1::text";
+var params=[username];
+console.log("Params are : ");
+console.log(params);
+
+pool.query(sql, params, function(err, db_results){
+    if(err){
+        throw err;
+    } 
+    else {
+        console.log("back from database with: ");
+        console.log(db_results);
+
+        callback(null, db_results);
+    }
+});
+
+}
+
 module.exports = {
     createUser: createUser,
-    checkLogin: checkLogin
+    checkLogin: checkLogin,
+    getUser: getUser
 };

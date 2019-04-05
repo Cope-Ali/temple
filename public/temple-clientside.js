@@ -133,6 +133,7 @@ $.get("/searchRegion", {region:region}, function(data){
                     console.log(result);
                     if (result) {    
                         $("#status").text("Successfully logged in.");
+                        displayUser();
                     } else {
                         $("#status").text("Error logging in.");
                     }
@@ -249,28 +250,19 @@ $.get("/searchRegion", {region:region}, function(data){
                 } 
 
 
-function callAPI(){
-    var request = new XMLHttpRequest();
-    var key ='TYZJ2fgHIOHpk2pFTSDO2c7kq0Eg3Qeg';
-    request.open('GET', 'http://www.mapquestapi.com/directions/v2/optimizedroute?key=TYZJ2fgHIOHpk2pFTSDO2c7kq0Eg3Qeg&json={"locations":["Denver,CO","Westminster,CO","Boulder,CO"]', true );
-    request.onload = function(){
-        var data = JSON.parse(this.response);
-        data.forEach()
-        console.log('its loaded');
-    }
-    request.send()
+function displayUser(){
+var name = "Guest";
+
+$.get("/getUser", function(data){
+     console.log("Back from the server with: ");
+     console.log(data);
+     name = data.rows[0].name;
+     console.log(name);
+        if(name == 'null'){
+            message = "<h2>Stats for Guest </h2><br> Please log in to track the temples you have visited";
+        }
+        var message = "<h2>Stats for " + name +"</h2> <br> You have visitied the following temples: <br>";
+     $("#userStats").html(message);
+ })
+
 }
-// GET http://www.mapquestapi.com/directions/v2/optimizedroute?key=KEY&json={"locations":["Denver,CO","Westminster,CO","Boulder,CO"]
-
-
-  /*   var searchString = "oakland temple, 4770 lincoln avenue, oakland, CA 94062";
-    console.log("Searching for: " + searchString);
-    var origin = "4075 Riverside Ave, Anderson, CA 96007";
-    var destination = "oakland temple, 4770 lincoln avenue, oakland, CA 94062";
-
-    var params = 0;
-    //$.get("/geocode", function(data){
-      
-    console.log(data);
-    }  )}          
- */
