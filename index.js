@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const path = require("path");
 const bodyParser = require('body-parser');
@@ -14,6 +15,7 @@ const stateController = require("./controllers/stateController.js")
 const regionController = require("./controllers/regionController.js")
 const templeController = require("./controllers/templeController.js")
 const userController = require("./controllers/userController.js")
+const apiController = require("./controllers/apiController.js")
 
 const PORT = process.env.PORT || 5000;
 
@@ -77,6 +79,18 @@ app.get('/temple', templeController.getTempleById);
 
 app.post("/createUser", urlencodedParser, userController.create);
 app.post('/login', urlencodedParser, userController.login);
+
+//geocode an address
+app.get("/geocode", function geocode(req, res){
+    googleMapsClient.geocode({
+        address: '1600 Amphitheatre Parkway, Mountain View, CA'
+      }, function(err, response) {
+        if (!err) {
+          console.log(response.json.results);
+        }
+      });
+})
+
 
 app.listen(PORT, function(){
     console.log("Server listening on port " + PORT);

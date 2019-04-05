@@ -50,7 +50,9 @@ function login(req,res){
     var username = req.body.username;
     var password = req.body.password;
     userModel.checkLogin(username, function(error, results){
-        var dbPassword = results.rows[0].password;
+        //results = json(results);
+        console.log(results);
+        var dbPassword = results.fields[0].password;
         console.log(dbPassword);
         console.log(password);
         var isMatch = false;

@@ -208,7 +208,7 @@ $.get("/searchRegion", {region:region}, function(data){
                     selectedItems.push(items[i].value);
             }
             console.log(selectedItems);
-            $("#resultsDiv").html("In what order do you want to visit your selected temples? <br>" + selectedItems);
+            $("#resultsDiv").html("Identify any temples you have visited. <br>" + selectedItems);
                 //create form
             var sortForm = document.createElement("form");
             var inBox = document.createElement("input");
@@ -220,7 +220,7 @@ $.get("/searchRegion", {region:region}, function(data){
                     //create datalist
             var dataList = document.createElement("datalist");
             dataList.setAttribute("id", "templesToRank");
-            
+            //dataList.empty();
             for(var i=0; i < selectedItems.length; i++){
                 var option = document.createElement("option");
                 var item = selectedItems[i];
@@ -242,7 +242,35 @@ $.get("/searchRegion", {region:region}, function(data){
             s.setAttribute('type',"submit");
             s.setAttribute('value',"Submit");
             s.setAttribute('id',"button");
+            s.setAttribute('onclick', "callAPI()")
             sortForm.appendChild(s);
             $("#resultsDiv").append($(sortForm));
 
                 } 
+
+
+function callAPI(){
+    var request = new XMLHttpRequest();
+    var key ='TYZJ2fgHIOHpk2pFTSDO2c7kq0Eg3Qeg';
+    request.open('GET', 'http://www.mapquestapi.com/directions/v2/optimizedroute?key=TYZJ2fgHIOHpk2pFTSDO2c7kq0Eg3Qeg&json={"locations":["Denver,CO","Westminster,CO","Boulder,CO"]', true );
+    request.onload = function(){
+        var data = JSON.parse(this.response);
+        data.forEach()
+        console.log('its loaded');
+    }
+    request.send()
+}
+// GET http://www.mapquestapi.com/directions/v2/optimizedroute?key=KEY&json={"locations":["Denver,CO","Westminster,CO","Boulder,CO"]
+
+
+  /*   var searchString = "oakland temple, 4770 lincoln avenue, oakland, CA 94062";
+    console.log("Searching for: " + searchString);
+    var origin = "4075 Riverside Ave, Anderson, CA 96007";
+    var destination = "oakland temple, 4770 lincoln avenue, oakland, CA 94062";
+
+    var params = 0;
+    //$.get("/geocode", function(data){
+      
+    console.log(data);
+    }  )}          
+ */
