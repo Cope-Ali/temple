@@ -256,12 +256,18 @@ var name = "Guest";
 $.get("/getUser", function(data){
      console.log("Back from the server with: ");
      console.log(data);
-     name = data.rows[0].name;
+        if(data !='null'){
+            name = data.rows[0].name;
+        }
+        else
+            name = data;
      console.log(name);
         if(name == 'null'){
             message = "<h2>Stats for Guest </h2><br> Please log in to track the temples you have visited";
         }
-        var message = "<h2>Stats for " + name +"</h2> <br> You have visitied the following temples: <br>";
+        else{
+             var message = "<h2>Stats for " + name +"</h2> <br> You have visitied the following temples: <br>";
+            }
      $("#userStats").html(message);
  })
 
