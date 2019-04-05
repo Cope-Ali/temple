@@ -1,3 +1,4 @@
+-- heroku pg:psql
 -- \pset pager off
 
 CREATE TABLE states(
@@ -35,6 +36,13 @@ CREATE TABLE users(
     home_stateId        int             references states(state_id),
     home_regionID       int             references regions(region_id),
     favoriteTemple      int             references temples(temple_id)
+);
+
+
+CREATE TABLE visited(
+    visited_id  serial  PRIMARY KEY,
+    user_id     INT     references users(user_id),
+    temple_id   INT     references temples(temple_id)
 );
 
 INSERT INTO states(name, abbrev)

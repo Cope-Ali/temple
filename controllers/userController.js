@@ -79,11 +79,26 @@ function getUser( req, res){
     }
     else
     res.send('null');
+}
+
+function getVisited(req, res){
+    if(req.session.user['username']){
+        var username = req.session.user['username'];
+        console.log(username);
+
+        userModel.visitedTemples(username, function(error, results){
+            console.log("getting user information from the database");
+            res.json(results);
+        });
+    }
+    else
+    res.send('null');
 
 }
 
 module.exports = {
     create: create,
     login: login,
-    getUser: getUser
+    getUser: getUser,
+    getVisited: getVisited
 }

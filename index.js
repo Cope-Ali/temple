@@ -70,19 +70,9 @@ app.get("/temples", templeController.getTempleList);
 app.get('/temple', templeController.getTempleById);
 
 app.get("/getUser", userController.getUser);
+app.get("/getVisited", userController.getVisited);
 app.post("/createUser", urlencodedParser, userController.create);
 app.post('/login', urlencodedParser, userController.login);
-
-//geocode an address
-app.get("/geocode", function geocode(req, res){
-    googleMapsClient.geocode({
-        address: '1600 Amphitheatre Parkway, Mountain View, CA'
-      }, function(err, response) {
-        if (!err) {
-          console.log(response.json.results);
-        }
-      });
-})
 
 
 app.listen(PORT, function(){

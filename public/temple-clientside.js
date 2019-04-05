@@ -266,9 +266,26 @@ $.get("/getUser", function(data){
             message = "<h2>Stats for Guest </h2><br> Please log in to track the temples you have visited";
         }
         else{
-             var message = "<h2>Stats for " + name +"</h2> <br> You have visitied the following temples: <br>";
+             var message = "<h2>Stats for " + name +"</h2> <br> You have visited the following temples: <br>";
             }
      $("#userStats").html(message);
+     displayVisited();
  })
 
 }
+
+function displayVisited(){
+        console.log ("calling display visited");
+    $.get("/getVisited", function(data){
+         console.log("Back from the server with: ");
+         console.log(data);
+            if(data !='null'){
+                var ul = document.createElement("ul")
+                for(var i=0; i < data.rows.length; i++){
+                    var temple = data.rows[i];
+                $("#visitedTemples").append("<li>" + temple.name + " | " + temple.address + " " + temple.city + ", " +  temple.state + "</li>");
+                }
+            }
+     })
+    
+    }
