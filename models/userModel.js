@@ -70,8 +70,24 @@ pool.query(sql, params, function(err, db_results){
 }
 
 function visitedTemples(username, callback){
-    var sql = "SELECT temples.temple_id, temples.name, temples.address, temples.city, temples.state, temples.website, visited.user_id, visited.temple_id, users.user_id FROM temples INNER JOIN visited ON visited.temple_id = temples.temple_id INNER JOIN users ON users.user_id = visited.user_id WHERE users.username=$1::text";
+    var sql = "SELECT DISTINCT temples.temple_id, temples.name, temples.address, temples.city, temples.state, temples.website, visited.user_id, visited.temple_id, users.user_id FROM temples INNER JOIN visited ON visited.temple_id = temples.temple_id INNER JOIN users ON users.user_id = visited.user_id WHERE users.username=$1::text";
     var params=[username];
+    pool.query(sql, params, function(err, db_results){
+        if(err){
+            throw err;
+        } 
+        else {
+            console.log("back from database with: ");
+            console.log(db_results);
+
+            callback(null, db_results);
+        }
+    });
+}
+
+function addVisited(username, temple, callback){
+    var sql = "INSERT INTO visited(user_id, temple_id) VALUES((SELECT user_id FROM users WHERE username=$1::text),(SELECT temple_id FROM temples WHERE name=$2::text))";
+    var params=[username, temple];
     pool.query(sql, params, function(err, db_results){
         if(err){
             throw err;
@@ -89,5 +105,6 @@ module.exports = {
     createUser: createUser,
     checkLogin: checkLogin,
     getUser: getUser,
-    visitedTemples: visitedTemples
+    visitedTemples: visitedTemples,
+    addVisited: addVisited
 };

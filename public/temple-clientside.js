@@ -1,5 +1,5 @@
 function searchByState(){
-//console.log("Searching by state...");
+console.log("Calling searchByState");
 $("#ulTemples").empty();
 $("#resultsDiv").empty();
 var f = document.createElement("form");
@@ -17,7 +17,8 @@ $.get("/searchState", {state:state}, function(data){
 
     for(var i=0; i < data.rows.length; i++){
         var temple = data.rows[i];
-        var templeListing = temple.name + ", " + temple.address + ", " + temple.city + ", " + temple.state;
+        // var templeListing = temple.name + ", " + temple.address + ", " + temple.city + ", " + temple.state;
+        var templeListing = temple.name;
         var cx = document.createElement("input"); //input element, text
         cx.setAttribute('type',"checkbox");
         cx.setAttribute('name', "temple");
@@ -39,13 +40,14 @@ $.get("/searchState", {state:state}, function(data){
             s.setAttribute('value',"Submit");
             s.setAttribute('onClick', 'selectState()')
             f.appendChild(s);
+            $("#resultsDiv").html("<h3>Identify any temples you have visited: <h3>");
     $("#resultsDiv").append($(f));
 
 })
 };
 
 function searchByRegion(){
-    //console.log("Searching by region...");
+    console.log("Calling searchByRegion");
     $("#ulTemples").empty();
     $("#resultsDiv").empty();
     var f = document.createElement("form");
@@ -60,7 +62,8 @@ $.get("/searchRegion", {region:region}, function(data){
    // console.log(data);
     for(var i=0; i < data.rows.length; i++){
         var temple = data.rows[i];
-        var templeListing = temple.name + ", " + temple.address + ", " + temple.city + ", " + temple.state;
+         // var templeListing = temple.name + ", " + temple.address + ", " + temple.city + ", " + temple.state;
+         var templeListing = temple.name;
         var cx = document.createElement("input"); //input element, text
         cx.setAttribute('type',"checkbox");
         cx.setAttribute('name', "temple");
@@ -82,11 +85,13 @@ $.get("/searchRegion", {region:region}, function(data){
     s.setAttribute('value',"Submit");
     s.setAttribute('onClick', 'selectState()');
     f.appendChild(s);
+    $("#resultsDiv").html("<h3>Identify any temples you have visited: <h3>");
     $("#resultsDiv").append($(f));
 })
     }
 
     function stateList(){
+        console.log("Calling stateList");
         //console.log("Searching for all states");
     
     $.get("/states", function(data){
@@ -102,6 +107,7 @@ $.get("/searchRegion", {region:region}, function(data){
         }
 
     function regionList(){
+        console.log("Calling regionList");
        // console.log("Searching for all regions");
     
         $.get("/regions", function(data){
@@ -121,6 +127,7 @@ $.get("/searchRegion", {region:region}, function(data){
 
         // function checkUser(){}
             function login() {
+                console.log("Calling login");
                 var username = $("#username").val();
                 var password = $("#password").val();
             
@@ -143,6 +150,7 @@ $.get("/searchRegion", {region:region}, function(data){
         
 
         function createAccount(){
+            console.log("Calling createAccount");
             $("#acForm").empty();
             var f = document.createElement("form");
             f.setAttribute('method',"post");
@@ -200,57 +208,71 @@ $.get("/searchRegion", {region:region}, function(data){
             $("#acForm").append($(f));
         }
 
-        function selectState(){
-            console.log("Select states!");
-            var items=document.getElementsByName('temple');
-            var selectedItems=[];
-            for(var i=0; i<items.length; i++){
-                if(items[i].type=='checkbox' && items[i].checked==true)
-                    selectedItems.push(items[i].value);
-            }
-            console.log(selectedItems);
-            $("#resultsDiv").html("Identify any temples you have visited. <br>" + selectedItems);
-                //create form
-            var sortForm = document.createElement("form");
-            var inBox = document.createElement("input");
-            inBox.setAttribute("list", "templesToRank");
-            sortForm.setAttribute('method',"post");
-            //TO DO HANDLE /getRoute
-            // sortForm.setAttribute('action',"/getRoute");
-            sortForm.setAttribute('id',"sortForm");
-                    //create datalist
-            var dataList = document.createElement("datalist");
-            dataList.setAttribute("id", "templesToRank");
-            //dataList.empty();
-            for(var i=0; i < selectedItems.length; i++){
-                var option = document.createElement("option");
-                var item = selectedItems[i];
-                option.setAttribute("value", item);
-                dataList.appendChild(option);
-                console.log(item + "is number " + i);
-            }
-            sortForm.appendChild(dataList)
+function selectState(){
+    console.log("calling selectState");
+    var items=document.getElementsByName('temple');
+    //var selectedItems=[];
+    for(var i=0; i<items.length; i++){
+        if(items[i].type=='checkbox' && items[i].checked==true)
+            //selectedItems.push(items[i].value);
+            params = {
+                name: items[i].value
+            };
+            $.post("/addVisited", params, function(result) {
+                console.log(result);
+                if (result == true) {    
+                    $("#resultsDiv").text("Successfully added " + params.name + " to visited temples!");
+                    displayVisited();
+                } else {
+                    $("#resultsDiv").text("Error adding temple.");
+                }
+            });
 
-            for(var i=0; i < selectedItems.length; i++){
-            var inBox = document.createElement("input");
-            inBox.setAttribute("list", "templesToRank");
-            inBox.setAttribute("id", "templesToRank");
-            sortForm.appendChild(inBox);
-            var b = document.createElement("br");
-            sortForm.appendChild(b);
-            }
-            var s = document.createElement("input"); //input element, Submit button
-            s.setAttribute('type',"submit");
-            s.setAttribute('value',"Submit");
-            s.setAttribute('id',"button");
-            s.setAttribute('onclick', "callAPI()")
-            sortForm.appendChild(s);
-            $("#resultsDiv").append($(sortForm));
+    }
+    console.log(selectedItems);
+    $("#resultsDiv").html(selectedItems);
+        //create form
+    // var sortForm = document.createElement("form");
+    // var inBox = document.createElement("input");
+    // inBox.setAttribute("list", "templesToRank");
+    // sortForm.setAttribute('method',"post");
+    // //TO DO HANDLE /getRoute
+    // // sortForm.setAttribute('action',"/getRoute");
+    // sortForm.setAttribute('id',"sortForm");
+    //         //create datalist
+    // var dataList = document.createElement("datalist");
+    // dataList.setAttribute("id", "templesToRank");
+    // //dataList.empty();
+    // for(var i=0; i < selectedItems.length; i++){
+    //     var option = document.createElement("option");
+    //     var item = selectedItems[i];
+    //     option.setAttribute("value", item);
+    //     dataList.appendChild(option);
+    //     console.log(item + "is number " + i);
+    // }
+    // sortForm.appendChild(dataList)
 
-                } 
+    // for(var i=0; i < selectedItems.length; i++){
+    // var inBox = document.createElement("input");
+    // inBox.setAttribute("list", "templesToRank");
+    // inBox.setAttribute("id", "templesToRank");
+    // sortForm.appendChild(inBox);
+    // var b = document.createElement("br");
+    // sortForm.appendChild(b);
+    // }
+    // var s = document.createElement("input"); //input element, Submit button
+    // s.setAttribute('type',"submit");
+    // s.setAttribute('value',"Submit");
+    // s.setAttribute('id',"button");
+    // s.setAttribute('onclick', "callAPI()")
+    // sortForm.appendChild(s);
+    // $("#resultsDiv").append($(sortForm));
+
+        } 
 
 
 function displayUser(){
+    console.log("Calling displayUser");
 var name = "Guest";
 
 $.get("/getUser", function(data){
@@ -266,7 +288,7 @@ $.get("/getUser", function(data){
             message = "<h2>Stats for Guest </h2><br> Please log in to track the temples you have visited";
         }
         else{
-             var message = "<h2>Stats for " + name +"</h2> <br> You have visited the following temples: <br>";
+             var message = "<h2>Stats for " + name +"</h2><h3>You have visited the following temples: </h3>";
             }
      $("#userStats").html(message);
      displayVisited();
@@ -275,7 +297,7 @@ $.get("/getUser", function(data){
 }
 
 function displayVisited(){
-        console.log ("calling display visited");
+        console.log ("calling displayVisited");
     $.get("/getVisited", function(data){
          console.log("Back from the server with: ");
          console.log(data);
@@ -283,9 +305,13 @@ function displayVisited(){
                 var ul = document.createElement("ul")
                 for(var i=0; i < data.rows.length; i++){
                     var temple = data.rows[i];
-                $("#visitedTemples").append("<li>" + temple.name + " | " + temple.address + " " + temple.city + ", " +  temple.state + "</li>");
+                $("#visitedTemples").append("<li>" + temple.name + " | " + temple.address + " " + temple.city + ", " +  temple.state +  "</li>");
                 }
             }
      })
     
     }
+
+function addVisited(){
+    console.log("calling addVisited");
+}    

@@ -73,6 +73,7 @@ app.get("/getUser", userController.getUser);
 app.get("/getVisited", userController.getVisited);
 app.post("/createUser", urlencodedParser, userController.create);
 app.post('/login', urlencodedParser, userController.login);
+app.post('/addVisited', urlencodedParser, userController.addVisited);
 
 
 app.listen(PORT, function(){

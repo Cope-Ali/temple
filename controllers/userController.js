@@ -96,9 +96,27 @@ function getVisited(req, res){
 
 }
 
+function addVisited(req, res){
+    if(req.session.user['username']){
+        var username = req.session.user['username'];
+        console.log(username);
+        var temple = req.body.name;
+
+        userModel.addVisited(username, temple, function(error, results){
+            console.log("returning from insert into visited");
+            res.send(true);
+        });
+    }
+    else
+    res.send('null');
+
+}
+
+
 module.exports = {
     create: create,
     login: login,
     getUser: getUser,
-    getVisited: getVisited
+    getVisited: getVisited,
+    addVisited: addVisited
 }
