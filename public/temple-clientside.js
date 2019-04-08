@@ -228,7 +228,7 @@ function selectState(){
                 console.log(result);
                 if (result == true) {    
                     $("#resultsDiv").text("Successfully added " + params.name + " to visited temples!");
-                    displayVisited();
+                   // displayVisited();
                 } else {
                     $("#resultsDiv").text("Error adding temple.");
                 }
@@ -297,6 +297,7 @@ $.get("/getUser", function(data){
              var message = "<h2>Stats for " + name +"</h2><h3>You have visited the following temples: </h3>";
             }
      $("#userStats").html(message);
+     console.log("calling displayVisited from displayUser");
      displayVisited();
  })
 
