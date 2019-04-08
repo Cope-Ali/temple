@@ -21,7 +21,7 @@ $.get("/searchState", {state:state}, function(data){
         var templeListing = temple.name;
         var cx = document.createElement("input"); //input element, text
         cx.setAttribute('type',"checkbox");
-        cx.setAttribute('name', "temple");
+        cx.setAttribute('name', "templeChecks");
         cx.setAttribute('value', templeListing);
         var l = document.createElement("label")
         l.setAttribute('for', temple.name);
@@ -66,7 +66,7 @@ $.get("/searchRegion", {region:region}, function(data){
          var templeListing = temple.name;
         var cx = document.createElement("input"); //input element, text
         cx.setAttribute('type',"checkbox");
-        cx.setAttribute('name', "temple");
+        cx.setAttribute('name', "templeChecks");
         cx.setAttribute('value', templeListing);
         var l = document.createElement("label");
         l.setAttribute('for', temple.name);
@@ -210,14 +210,20 @@ $.get("/searchRegion", {region:region}, function(data){
 
 function selectState(){
     console.log("calling selectState");
-    var items=document.getElementsByName('temple');
-    //var selectedItems=[];
+    var items=document.getElementsByName('templeChecks');
+    console.log("items : " + items);
+    var selectedItems=[];
     for(var i=0; i<items.length; i++){
         if(items[i].type=='checkbox' && items[i].checked==true)
-            //selectedItems.push(items[i].value);
+            selectedItems.push(items[i].value);
+    }
+    for(var i=0; i<selectedItems.length; i++){
+            var name = selectedItems[i];
+            console.log( "name is " + name);
             params = {
-                name: items[i].value
+                name: name
             };
+            console.log("Params are: " + params);
             $.post("/addVisited", params, function(result) {
                 console.log(result);
                 if (result == true) {    
@@ -227,7 +233,7 @@ function selectState(){
                     $("#resultsDiv").text("Error adding temple.");
                 }
             });
-
+        
     }
     console.log(selectedItems);
     $("#resultsDiv").html(selectedItems);
@@ -298,6 +304,7 @@ $.get("/getUser", function(data){
 
 function displayVisited(){
         console.log ("calling displayVisited");
+        $("#visitedTemples").empty();
     $.get("/getVisited", function(data){
          console.log("Back from the server with: ");
          console.log(data);

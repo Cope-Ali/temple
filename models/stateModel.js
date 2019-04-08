@@ -7,7 +7,7 @@ const pool = new Pool({connectionString: db_url});
 
 function getAllStates(callback){
     //get all temple states from DB
-    var sql = "SELECT DISTINCT state FROM temples";
+    var sql = "SELECT DISTINCT state FROM temples ORDER BY state ASC";
     pool.query(sql, function(err, db_results){
         if(err){
             throw err;
