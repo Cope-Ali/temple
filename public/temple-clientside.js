@@ -228,7 +228,6 @@ function selectState(){
                 console.log(result);
                 if (result == true) {    
                     $("#resultsDiv").text("Successfully added " + params.name + " to visited temples!");
-                   // displayVisited();
                 } else {
                     $("#resultsDiv").text("Error adding temple.");
                 }
@@ -236,6 +235,7 @@ function selectState(){
         
     }
     console.log(selectedItems);
+    displayVisited();
     $("#resultsDiv").html(selectedItems);
         //create form
     // var sortForm = document.createElement("form");
